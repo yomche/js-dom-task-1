@@ -1,0 +1,43 @@
+.fieldset {
+  margin: auto;
+  width: 600px;
+  height: 220px;
+  text-align: center;
+  background-color: #d8cfcf;
+}
+
+.dropdown {
+  width: 120px;
+  display: inline-block;
+  background: #fff;
+  position: relative;
+}
+
+.dropdown-sub {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+  width: 120px;
+  background: #fff;
+  position: absolute;
+}
+
+.dropdown-sub_element,
+.dropdown_element {
+  display: block;
+  padding: 2px;
+  text-decoration: none;
+  color: #000;
+}
+
+.dropdown:hover .dropdown-sub {
+  display: block;
+  overflow-y: auto;
+  max-height: 90px;
+}
+
+.dropdown-sub_element:hover {
+  background-color: #c2b4b4;
+}
+
