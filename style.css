@@ -1,20 +1,18 @@
 .fieldset {
   margin: auto;
   width: 600px;
-  height: 220px;
+  height: 190px;
   text-align: center;
   background-color: #d8cfcf;
 }
 
 .dropdown {
-  width: 120px;
   display: inline-block;
   background: #fff;
   position: relative;
 }
 
-.dropdown-sub {
-  list-style: none;
+.dropdown-content {
   margin: 0;
   padding: 0;
   display: none;
@@ -23,21 +21,32 @@
   position: absolute;
 }
 
-.dropdown-sub_element,
-.dropdown_element {
+.dropdown-btn-close::before {
+  content: "▶";
+}
+
+.dropdown_button {
+  width: 120px;
+  height: 23px;
+}
+
+.dropdown-content_element {
   display: block;
   padding: 2px;
   text-decoration: none;
   color: #000;
 }
 
-.dropdown:hover .dropdown-sub {
+.dropdown-btn-open::before {
+  content: "▼";
+}
+
+.show-dropdown-content {
   display: block;
   overflow-y: auto;
   max-height: 90px;
 }
 
-.dropdown-sub_element:hover {
+.dropdown-content_element:hover {
   background-color: #c2b4b4;
 }
-
