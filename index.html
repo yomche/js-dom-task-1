@@ -4,48 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Combobox</title>
+    <title>Task Combobox</title>
   </head>
   <body>
     <fieldset class="fieldset">
-      <p>Dropdown element</p>
+      <h3>Dropdown element</h3>
       <form action="#" method="get">
         <input
           type="text"
+          id="input-destination"
           name="input-destination"
           maxlength="30"
-          autofocus="true"
         />
         <div class="dropdown">
-          <a class="dropdown_element" href="#">BUTTON</a>
-          <ul class="dropdown-sub">
-            <li>
-              <a class="dropdown-sub_element" id="0" href="#bawcomville"
-                >Bawcomville</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-sub_element" id="1" href="#rushford"
-                >Rushford</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-sub_element" id="2" href="#bayview">Bayview</a>
-            </li>
-            <li>
-              <a class="dropdown-sub_element" id="3" href="#heywood">Heywood</a>
-            </li>
-            <li>
-              <a class="dropdown-sub_element" id="4" href="#westbrook"
-                >Westbrook</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-sub_element" id="5" href="#pacifica"
-                >Pacifica</a
-              >
-            </li>
-          </ul>
+          <button id="dropdown-btn" class="dropdown_button dropdown-btn-close dropdown-btn-open"></button>
+          <div class="dropdown-content" id="dropdown-cntnt">
+              <a class="dropdown-content_element" id="0" href="#bawcomville">Bawcomville</a>
+              <a class="dropdown-content_element" id="1" href="#rushford">Rushford</a>
+              <a class="dropdown-content_element" id="2" href="#bayview">Bayview</a>
+              <a class="dropdown-content_element" id="3" href="#heywood">Heywood</a>
+              <a class="dropdown-content_element" id="4" href="#westbrook">Westbrook</a>
+              <a class="dropdown-content_element" id="5" href="#pacifica">Pacifica</a>
+          </div>
         </div>
       </form>
     </fieldset>
