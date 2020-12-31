@@ -16,9 +16,13 @@
   margin: 0;
   padding: 0;
   display: none;
-  width: 120px;
+  width: 162.8px;
   background: #fff;
   position: absolute;
+  left: -169px;
+  border-width: 0px 1px 1px;
+  border-style: solid;
+  border-color: #000;
 }
 
 .dropdown-btn-close::before {
@@ -26,12 +30,13 @@
 }
 
 .dropdown_button {
-  width: 120px;
-  height: 23px;
+  width: 22px;
+  padding: 1px;
+  height: 22px;
 }
 
 .dropdown-content_element {
-  display: block;
+  display: none;
   padding: 2px;
   text-decoration: none;
   color: #000;
@@ -47,6 +52,7 @@
   max-height: 90px;
 }
 
-.dropdown-content_element:hover {
+/* .dropdown-content_element:hover {
   background-color: #c2b4b4;
 }
+*/
