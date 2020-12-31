@@ -1,21 +1,62 @@
-const dropdownOpen = document.getElementById("dropdown-btn");
-const dropdownContent = document.getElementById("dropdown-cntnt");
-const inputDestination = document.getElementById("input-destination");
-const changeButton = document.getElementsByClassName("dropdown_button");
+const button = document.getElementById("dropdown-btn");
+const dropdownContent = document.getElementById("list");
+const input = document.getElementById("input-destination");
 
-// UC 1: Open List
-dropdownOpen.addEventListener("click", function () {
-  changeButton.className = "dropdown-btn-open";
+function dropdownElementHandler() {
+  let fragment = new DocumentFragment();
+
+  let dropdownList = [
+    {
+      label: "Bawcomville",
+      id: 0,
+    },
+    {
+      label: "Rushford",
+      id: 1,
+    },
+    {
+      label: "Bayview",
+      id: 2,
+    },
+    {
+      label: "Heywood",
+      id: 3,
+    },
+    {
+      label: "Westbrook",
+      id: 4,
+    },
+    {
+      label: "Pacifica",
+      id: 5,
+    },
+  ];
+  
+  for (let i = 0; i < dropdownList.length; ++i) {
+    let listElement = document.createElement("li");
+    listElement.textContent = dropdownList[i].label;
+    fragment.appendChild(listElement);
+  }
+  dropdownContent.appendChild(fragment);
+}
+
+window.addEventListener("load", dropdownElementHandler);
+
+/* UserCase 1: Open List */
+function openDropdownHandler() {
   dropdownContent.classList.toggle("show-dropdown-content");
-  inputDestination.focus();
-});
+  input.focus();
+  input.value = "";
+}
 
-inputDestination.addEventListener("click", function () {
-  dropdownContent.classList.toggle("show-dropdown-content");
-  inputDestination.value = "";
-});
+button.addEventListener("click", openDropdownHandler);
+input.addEventListener("click", openDropdownHandler);
 
-// function myFunction() {
-//     document.getElementById("dropdown-content").classList.toggle("show-dropdown-content");
-//     document.getElementById("input-destination").focus();
+// /* UserCase 2: Filter List Elements */
+
+// function searchDropdownElementHandler() {
+//     const inputValue = input.value;
+//     const listElement
 // }
+
+input.addEventListener("input", searchDropdownElementHandler);
