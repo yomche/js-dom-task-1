@@ -2,10 +2,7 @@ const button = document.getElementById("dropdown-btn");
 const dropdownContent = document.getElementById("list");
 const input = document.getElementById("input-destination");
 
-function dropdownElementHandler() {
-  let fragment = new DocumentFragment();
-
-  let dropdownList = [
+let dropdownList = [
     {
       label: "Bawcomville",
       id: 0,
@@ -32,6 +29,9 @@ function dropdownElementHandler() {
     },
   ];
   
+function dropdownElementHandler() {
+  let fragment = new DocumentFragment();
+
   for (let i = 0; i < dropdownList.length; ++i) {
     let listElement = document.createElement("li");
     listElement.textContent = dropdownList[i].label;
@@ -53,10 +53,31 @@ button.addEventListener("click", openDropdownHandler);
 input.addEventListener("click", openDropdownHandler);
 
 // /* UserCase 2: Filter List Elements */
+function searchDropdownElementHandler() {
+    input.focus();
+    const inputValue = input.value;
+    let searchResult = [];
+    for (let i = 0; i < dropdownList.length; ++i) {
+      if (dropdownList[i].label.startsWith(inputValue)) {
+        searchResult.push(dropdownList[i]);
+      }
+    }
 
-// function searchDropdownElementHandler() {
-//     const inputValue = input.value;
-//     const listElement
-// }
+    let deleteEl = document.getElementsByTagName('li');
+    while (deleteEl.length > 0) {
+      let removeEl = deleteEl[0];
+      let containerEl = removeEl.parentNode;
+      containerEl.removeChild(removeEl);
+    }
+
+    let fragment = new DocumentFragment();
+
+    for (let i = 0; i < searchResult.length; ++i) {
+      let listElement = document.createElement("li");
+      listElement.textContent = searchResult[i].label;
+      fragment.appendChild(listElement);
+    }
+    dropdownContent.appendChild(fragment);
+}
 
 input.addEventListener("input", searchDropdownElementHandler);
