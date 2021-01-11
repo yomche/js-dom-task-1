@@ -35,13 +35,6 @@
   height: 22px;
 }
 
-.dropdown-content_element {
-  display: none;
-  padding: 2px;
-  text-decoration: none;
-  color: #000;
-}
-
 .dropdown-btn-open::before {
   content: "▼";
 }
