@@ -1,5 +1,5 @@
 const button = document.getElementById("dropdown-btn");
-const dropdownContent = document.getElementById("list");
+const getDropdownContent = () => document.getElementById("list");
 const input = document.getElementById("input-destination");
 
 /* Array of Objects */
@@ -31,25 +31,40 @@ let dropdownList = [
 	},
 ];
 
+/* UserCase 3: Choose from Dropdown List */
+
+const selectDropdownElementHandler = (event) => {
+	event.target.classList.add("dropdown-content_element");
+	input.value = event.target.textContent;
+	getDropdownContent().classList.remove("show-dropdown-content");
+
+};
+
+const highlightDropdownElementHandler = (event) => {
+	event.target.classList.add("dropdown-content_element");
+};
+
 /* Add List Elements in Markup */
 
-function dropdownElementHandler() {
+let dropdownElementHandler = () => {
 	let fragment = document.createDocumentFragment();
 
 	dropdownList.forEach(function (dropDownItem) {
 		let listElement = document.createElement("li");
 		listElement.textContent = dropDownItem.label;
+		listElement.addEventListener("click", selectDropdownElementHandler);
+		listElement.addEventListener("mouseover", highlightDropdownElementHandler);
 		fragment.appendChild(listElement);
 	});
 
-	dropdownContent.appendChild(fragment);
-}
+	getDropdownContent().appendChild(fragment);
+};
 
 window.addEventListener("load", dropdownElementHandler);
 
 /* Change arrow icon on close / open Dropdown*/
 
-function changeDropdownIconHandler() {
+let changeDropdownIconHandler = () => {
 	if (button.classList.contains("dropdown-btn-open")) {
 		button.classList.remove("dropdown-btn-open");
 		button.classList.add("dropdown-btn-close");
@@ -57,16 +72,16 @@ function changeDropdownIconHandler() {
 		button.classList.remove("dropdown-btn-close");
 		button.classList.add("dropdown-btn-open");
 	}
-}
+};
 
 /* UserCase 1: Open List */
 
-function openDropdownHandler() {
-	// dropdownContent.classList.remove("hide-dropdown-content");
-	dropdownContent.classList.toggle("show-dropdown-content");
+let openDropdownHandler = () => {
+	getDropdownContent().classList.toggle("show-dropdown-content");
 	input.focus();
 	input.value = "";
-}
+	searchDropdownElementHandler();
+};
 
 button.addEventListener("click", openDropdownHandler);
 button.addEventListener("click", changeDropdownIconHandler);
@@ -76,63 +91,51 @@ input.addEventListener("click", changeDropdownIconHandler);
 
 /* UserCase 2: Filter List Elements */
 
-function searchDropdownElementHandler() {
+let searchDropdownElementHandler = () => {
 	input.focus();
-	// dropdownContent.classList.remove("hide-dropdown-content");
-	dropdownContent.classList.add("show-dropdown-content");
+	getDropdownContent().classList.add("show-dropdown-content");
 	const inputValue = input.value.toLowerCase();
 
-	let matchingElements = [];
-	dropdownList.forEach(function (dropDownItem) {
-		if (dropDownItem.label.toLowerCase().indexOf(inputValue) == 0) {
-			matchingElements.push(dropDownItem);
-		}
+	let matchingElements = dropdownList.filter(function (dropDownItem) {
+		return (
+			dropDownItem.label.toLowerCase().indexOf(inputValue) == 0 ||
+      inputValue == ""
+		);
 	});
 
-	if (matchingElements.length > 0) {
-		let listElement = document.getElementsByTagName("li");
-		while (listElement.length > 0) {
-			let removedElement = listElement[0];
-			let removedElementParent = removedElement.parentNode;
-			removedElementParent.removeChild(removedElement);
-		}
+	let list = document.createElement("ul");
+	list.setAttribute("id", "list");
 
-		let fragment = document.createDocumentFragment();
+	let fragment = document.createDocumentFragment();
 
-		matchingElements.forEach(function (matchingElementsItem) {
-			let listElement = document.createElement("li");
-			listElement.textContent = matchingElementsItem.label;
-			fragment.appendChild(listElement);
-		});
-
-		dropdownContent.appendChild(fragment);
+	for (let i = 0; i < matchingElements.length; i++) {
+		let listElement = document.createElement("li");
+		listElement.textContent = matchingElements[i].label;
+		listElement.addEventListener("click", selectDropdownElementHandler);
+		listElement.addEventListener("mouseover", highlightDropdownElementHandler);
+		fragment.appendChild(listElement);
 	}
-}
+
+	list.classList.add("dropdown-content", "show-dropdown-content");
+	list.appendChild(fragment);
+
+	getDropdownContent().parentNode.replaceChild(list, getDropdownContent());
+};
 
 input.addEventListener("input", searchDropdownElementHandler);
 
 /* UNDONE UserCase 4: Close dropdown without choosing List Element*/
 
-function closeDropdownHandler(event) {
-	if (!input.contains(event.target) && !button.contains(event.target)) {
-		dropdownContent.classList.remove("show-dropdown-content");
-		// dropdownContent.classList.add("hide-dropdown-content");
+let closeDropdownHandler = (event) => {
+	if (
+		!input.contains(event.target) &&
+    !button.contains(event.target) &&
+    !getDropdownContent().contains(event.target)
+	) {
+		getDropdownContent().classList.remove("show-dropdown-content");
 		button.classList.remove("dropdown-btn-open");
 		button.classList.add("dropdown-btn-close");
 	}
-}
+};
 
-window.addEventListener("click", closeDropdownHandler);
-
-/* UNDONE UserCase 3: Choose from Dropdown List */
-
-let listElement = document.getElementsByTagName("li");
-function selectDropdownElementHandler(event) {
-	for (let i = 0; i < listElement.length; i++) {
-		if (listElement[i].contains(event.target)) {
-			input.value = listElement[i].value;
-		}
-	}
-}
-
-listElement.addEventListener("click", selectDropdownElementHandler);
+document.addEventListener("click", closeDropdownHandler);
