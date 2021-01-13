@@ -6,6 +6,10 @@
   background-color: #d8cfcf;
 }
 
+.input{
+  width: 160px;
+}
+
 .dropdown {
   display: inline-block;
   background: #fff;
@@ -50,11 +54,7 @@
   max-height: 90px;
 }
 
-.hide-dropdown-content {
-  display: none;
-}
-
-/* .dropdown-content_element:hover {
+.dropdown-content_element:hover {
   background-color: #c2b4b4;
 }
-*/
+
