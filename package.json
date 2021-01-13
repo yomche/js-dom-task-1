@@ -1,0 +1,25 @@
+{
+  "name": "js-dom-task-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "npx eslint script.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yomche/js-dom-task-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yomche/js-dom-task-1/issues"
+  },
+  "homepage": "https://github.com/yomche/js-dom-task-1#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.17.0"
+  }
+}
