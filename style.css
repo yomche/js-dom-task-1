@@ -1,7 +1,7 @@
 .fieldset {
   margin: auto;
   width: 600px;
-  height: 190px;
+  height: 300px;
   text-align: center;
   background-color: #d8cfcf;
 }
@@ -12,10 +12,7 @@
 
 .dropdown {
   display: inline-block;
-  background: #fff;
   position: relative;
-  height: 0;
-  width: 0;
 }
 
 .dropdown-content {
