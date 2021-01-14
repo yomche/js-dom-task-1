@@ -1,5 +1,8 @@
 const button = document.getElementById("dropdown-btn");
+
+/* Function for getting up-to-date list */
 const getDropdownContent = () => document.getElementById("list");
+
 const input = document.getElementById("input-destination");
 
 /* Array of Objects */
@@ -34,11 +37,14 @@ let dropdownList = [
 /* UserCase 3: Choose from Dropdown List */
 
 const selectDropdownElementHandler = (event) => {
-	event.target.classList.add("dropdown-content_element");
+	event.target.classList.toggle("dropdown-content_element");
 	input.value = event.target.textContent;
-	getDropdownContent().classList.remove("show-dropdown-content");
+	button.classList.remove("dropdown-btn-open");
+	button.classList.add("dropdown-btn-close");
 
 };
+
+/* Change List Element background, when you point mouse at it */
 
 const highlightDropdownElementHandler = (event) => {
 	event.target.classList.add("dropdown-content_element");
@@ -54,6 +60,7 @@ let dropdownElementHandler = () => {
 		listElement.textContent = dropDownItem.label;
 		listElement.addEventListener("click", selectDropdownElementHandler);
 		listElement.addEventListener("mouseover", highlightDropdownElementHandler);
+
 		fragment.appendChild(listElement);
 	});
 
