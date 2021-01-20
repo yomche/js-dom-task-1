@@ -36,12 +36,12 @@ const dropdownList = [
 
 /* UserCase 3: Choose from Dropdown List */
 
-let selectedElement = false;
+let isElementSelected = false;
 
 const selectDropdownElementHandler = (event) => {
 	event.target.classList.toggle("dropdown-content_element");
 	input.value = event.target.textContent;
-	selectedElement = true;
+	isElementSelected = true;
 	button.classList.remove("dropdown-btn-open");
 	button.classList.add("dropdown-btn-close");
 };
@@ -55,12 +55,12 @@ const highlightDropdownElementHandler = (event) => {
 /* Add List Elements in Markup */
 
 const dropdownElementHandler = () => {
-	let fragment = document.createDocumentFragment();
+	const fragment = document.createDocumentFragment();
 
 	dropdownList.forEach(function (dropDownItem) {
-		let listElement = document.createElement("li");
+		const listElement = document.createElement("li");
 		listElement.textContent = dropDownItem.label;
-		selectedElement = false;
+		isElementSelected = false;
 		listElement.addEventListener("click", selectDropdownElementHandler);
 		listElement.addEventListener("mouseover", highlightDropdownElementHandler);
 
@@ -74,20 +74,29 @@ window.addEventListener("load", dropdownElementHandler);
 
 /* UserCase 1: Open List */
 
-const dropdownListHeight = 100;
+const freeSpaceHandler = () => {
+	document.querySelector(".dropdown-content").style.display = "block";
+	document.querySelector(".dropdown-content").style.visibility = "hidden";
+	
+	const dropdownListHeight = document.querySelector(".dropdown-content").offsetHeight;
 
-const openDropdownHandler = () => {
+	document.querySelector(".dropdown-content").style.display = "";
+	document.querySelector(".dropdown-content").style.visibility = "";
+
 	const windowHeight = document.documentElement.clientHeight;
 	const bottomOffset =  input.getBoundingClientRect().bottom;
 	const bottomSpace = windowHeight - bottomOffset;
-	const isEnoughSpace = bottomSpace - dropdownListHeight > dropdownListHeight;
+	const isEnoughSpace = bottomSpace >= dropdownListHeight;
 
-	if(!isEnoughSpace) {
-		getDropdownContent().classList.toggle("show-dropdown-content-up");
-	}
-	else {
+	if(isEnoughSpace) {
 		getDropdownContent().classList.toggle("show-dropdown-content");
 	}
+	else {
+		getDropdownContent().classList.toggle("show-dropdown-content-up");
+	}
+};
+
+const openDropdownHandler = () => {
 	if (button.classList.contains("dropdown-btn-close")) {
 		button.classList.remove("dropdown-btn-close");
 		button.classList.add("dropdown-btn-open");
@@ -98,6 +107,8 @@ const openDropdownHandler = () => {
 	} else if (button.classList.contains("dropdown-btn-open")) {
 		button.classList.remove("dropdown-btn-open");
 		button.classList.add("dropdown-btn-close");
+		getDropdownContent().classList.remove("show-dropdown-content");
+		getDropdownContent().classList.remove("show-dropdown-content-up");
 	}
 };
 
@@ -110,40 +121,28 @@ const searchDropdownElementHandler = () => {
 	input.focus();
 	const inputValue = input.value.toLowerCase();
 
-	let matchingElements = dropdownList.filter(function (dropDownItem) {
+	const list = document.createElement("ul");
+	list.setAttribute("id", "list");
+
+	dropdownList.filter(function (dropDownItem) {
 		return (
 			dropDownItem.label.toLowerCase().indexOf(inputValue) == 0 ||
       inputValue == ""
 		);
-	});
-
-	let list = document.createElement("ul");
-	list.setAttribute("id", "list");
-
-	for (let i = 0; i < matchingElements.length; i++) {
-		let listElement = document.createElement("li");
-		listElement.textContent = matchingElements[i].label;
-		selectedElement = false;
+	}).forEach( function(element) {
+		const listElement = document.createElement("li");
+		listElement.textContent = element.label;
+		isElementSelected = false;
 		listElement.addEventListener("click", selectDropdownElementHandler);
 		listElement.addEventListener("mouseover", highlightDropdownElementHandler);
 		list.appendChild(listElement);
-	}
+	});
 
 	list.classList.add("dropdown-content");
-	
-	const windowHeight = document.documentElement.clientHeight;
-	const bottomOffset =  input.getBoundingClientRect().bottom;
-	const bottomSpace = windowHeight - bottomOffset;
-	const isEnoughSpace = bottomSpace - dropdownListHeight > dropdownListHeight;
-
-	if(!isEnoughSpace) {
-		list.classList.add("show-dropdown-content-up");
-	}
-	else {
-		list.classList.add("show-dropdown-content");
-	}
 
 	getDropdownContent().parentNode.replaceChild(list, getDropdownContent());
+
+	freeSpaceHandler();
 };
 
 input.addEventListener("input", searchDropdownElementHandler);
@@ -151,14 +150,14 @@ input.addEventListener("input", searchDropdownElementHandler);
 /* UserCase 4: Close dropdown without choosing List Element*/
 
 const closeDropdownHandler = (event) => {
-	let target = event.target;
+	const target = event.target;
 	if (target !== input && target !== button) {
 		getDropdownContent().classList.remove("show-dropdown-content");
 		getDropdownContent().classList.remove("show-dropdown-content-up");
 		button.classList.remove("dropdown-btn-open");
 		button.classList.add("dropdown-btn-close");
 	
-		if (!selectedElement) {
+		if (!isElementSelected) {
 			input.value = "";
 		}
 	}
